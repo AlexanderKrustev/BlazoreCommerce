@@ -1,0 +1,39 @@
+﻿
+@inject IProductService ProductService
+
+
+<div class="row">
+    @if (ProductService.Products.Count > 0)
+    {
+        @foreach (var pr in ProductService.Products)
+        {
+            <div class="col-md-6 col-lg-4 col-xl-3">             
+                
+                 <a href="/product/@pr.Id">
+                     <img class="media-img" alt="@pr.Title" src="@pr.Url" />
+                 </a>
+                <a href="/product/@pr.Id"><p>@pr.Title</p></a>
+                <p href="/product/@pr.Id"><p>@pr.Description</p></p>
+                 <p class="product-old-price">@pr.Price</p>
+            </div>
+            
+        }
+    }
+    else
+    {
+        <span>Loading...</span>
+    }
+</div>
+
+
+@code {
+    private List<Product> products= new List<Product>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ProductService.GetProducts();
+
+    }
+
+   
+}

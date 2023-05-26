@@ -1,0 +1,19 @@
+﻿@page "/product/{id:int}"
+@inject IProductService productService
+
+
+<span> Product ID = @Id</span>
+
+@code {
+    private Product? product = null;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        product = productService.Products.Find(c => c.Id == Id);
+        base.OnParametersSet();
+
+    }
+}
