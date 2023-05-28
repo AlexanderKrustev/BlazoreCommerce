@@ -11,6 +11,7 @@ builder.Services.AddDbContext<DataContext>(options =>
                          builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
@@ -31,7 +32,11 @@ app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
-
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "BlazoreCommerce Swagger");
+});
 app.UseRouting();
 
 
