@@ -13,25 +13,28 @@ namespace BlazoreCommerce.Server.Services.Products
 
         public async Task<ServiceResponse<List<Product>>> GetProducts()
         {
-            var reponse = new ServiceResponse<List<Product>>()
+            var response = new ServiceResponse<List<Product>>();            
+            response.Data = await _context.Products.ToListAsync();
+            if (response != null && response.Data != null && response.Success)
             {
-
-                Data = await _context.Products.ToListAsync()
-
-            };
-
-            if (reponse != null && reponse.Data != null && reponse.Success)
-            {
-
-                return reponse;
+                return response;
             }
-
             else
             {
-
-                throw new ArgumentNullException(nameof(reponse));
+                throw new ArgumentNullException(nameof(response));
             }
+        }
 
+        public async Task<ServiceResponse<List<Product>>> GetProductsByCategory(string category)
+        {
+           
+            var response = new ServiceResponse<List<Product>>()
+            {
+                Data = await this._context.Products.
+                Where(c => c.Category.Url.ToLower().Contains(category.ToLower())).ToListAsync()
+            };
+
+            return response;
         }
     }
 }

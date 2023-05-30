@@ -14,5 +14,9 @@ namespace BlazoreCommerce.Shared
         public decimal Price { get; set; }
 
         public string Url { get; set; } = string.Empty;
+
+        public Category? Category { get; set; }
+
+        public int CategoryId { get; set; }
     }
 }

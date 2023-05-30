@@ -1,8 +1,5 @@
-﻿using BlazoreCommerce.Server.Database;
-using BlazoreCommerce.Server.Services.Products;
-using Microsoft.AspNetCore.Http;
+﻿using BlazoreCommerce.Server.Services.Products;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BlazoreCommerce.Server.Controllers
 {
@@ -19,9 +16,20 @@ namespace BlazoreCommerce.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProducts()
         {
+
             var result = await _productService.GetProducts();
-    
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("cat/{category}")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProducts(string category)
+        {
+
+            var result = await _productService.GetProductsByCategory(category);
             return Ok(result);
         }
     }
+
+
 }

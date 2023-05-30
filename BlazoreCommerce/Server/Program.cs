@@ -2,6 +2,7 @@ global using BlazoreCommerce.Shared;
 using Microsoft.EntityFrameworkCore;
 using BlazoreCommerce.Server.Database;
 using BlazoreCommerce.Server.Services.Products;
+using BlazoreCommerce.Server.Services.Categories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 

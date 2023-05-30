@@ -1,9 +1,9 @@
 ﻿
 @inject IProductService ProductService
-
+@implements IDisposable;
 
 <div class="row">
-    @if (ProductService.Products.Count > 0)
+    @if (ProductService.Products !=null )
     {
         @foreach (var pr in ProductService.Products)
         {
@@ -13,7 +13,7 @@
                      <img class="media-img" alt="@pr.Title" src="@pr.Url" />
                  </a>
                 <a href="/product/@pr.Id"><p>@pr.Title</p></a>
-                <p href="/product/@pr.Id"><p>@pr.Description</p></p>
+                <p href="/product/@pr.Id"></p><p>@pr.Description</p>
                  <p class="product-old-price">@pr.Price</p>
             </div>
             
@@ -27,12 +27,16 @@
 
 
 @code {
-    private List<Product> products= new List<Product>();
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await ProductService.GetProducts();
+        ProductService.ProductChanged += StateHasChanged;
 
+    }
+
+    public void Dispose()
+    {
+        ProductService.ProductChanged -= StateHasChanged;
     }
 
    

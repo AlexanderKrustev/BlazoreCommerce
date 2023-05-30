@@ -1,8 +1,21 @@
 ﻿@page "/"
+@page "/cat/{*pageRoute}";
+@inject IProductService ProductService
 
 <PageTitle>Index</PageTitle>
 
-
-Category Comes Here
+<span>@pageRoute</span>
 
 <ProductList></ProductList>
+
+
+@code{
+    [Parameter]
+    public string? pageRoute { get; set; } = null;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await ProductService.GetProducts(pageRoute);       
+    }   
+
+}

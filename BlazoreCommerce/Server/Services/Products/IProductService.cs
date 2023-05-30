@@ -4,5 +4,7 @@
     {
 
         Task<ServiceResponse<List<Product>>> GetProducts();
+
+        Task<ServiceResponse<List<Product>>> GetProductsByCategory(string category);
     }
 }

@@ -3,8 +3,8 @@
 {
     public interface IProductService
     {
-        Task GetProducts();
-
+        event Action ProductChanged;
+        Task GetProducts(string? category=null);
         List<Product> Products { get; set; }
     }
 }
