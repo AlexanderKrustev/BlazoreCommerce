@@ -2,8 +2,17 @@
 
 @inject IProductService productService
 
-
-<span> Product ID = @Id</span>
+<div class="product-detail-wrapper">
+    
+     <img class="media-img" alt="@product.Title" src="@product.Url" />
+     <div class="product-info">
+        <h3>@product.Title </h3>
+        <h5>@product.Price</h5>
+        <p>@product.Description</p>
+    </div>
+     
+    
+</div>
 
 @code {
     private Product? product = null;

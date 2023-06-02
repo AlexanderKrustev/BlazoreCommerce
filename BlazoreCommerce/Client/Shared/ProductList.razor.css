@@ -1,10 +1,25 @@
-﻿.media-img {
-    height: 450px;
+﻿.product-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    overflow-x: none;
+    height: 520px;
+    width: 320px;
+    padding: 10px;
+    margin:20px;
+}
+
+.product-info{
+    float: left;
+    bottom:10px
+}
+
+.media-img {
+    height: auto;
     width: 310px
 }
 
-    .media-img:hover {
-        transform: scale(1.1)
-    }
+.media-img:hover {
+    transform: scale(1.1)
+}
 
 

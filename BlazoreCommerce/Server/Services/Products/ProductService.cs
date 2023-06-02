@@ -14,7 +14,10 @@ namespace BlazoreCommerce.Server.Services.Products
         public async Task<ServiceResponse<List<Product>>> GetProducts()
         {
             var response = new ServiceResponse<List<Product>>();            
-            response.Data = await _context.Products.ToListAsync();
+            response.Data = await _context.Products
+               .Include(p=>p.Variants)
+               .ThenInclude(v=>v.ProductType)
+               .ToListAsync();
             if (response != null && response.Data != null && response.Success)
             {
                 return response;

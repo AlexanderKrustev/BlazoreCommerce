@@ -7,16 +7,12 @@
     {
         @foreach (var pr in ProductService.Products)
         {
-            <div class="col-md-6 col-lg-4 col-xl-3">             
-                
-                 <a href="/product/@pr.Id">
-                     <img class="media-img" alt="@pr.Title" src="@pr.Url" />
-                 </a>
-                <a href="/product/@pr.Id"><p>@pr.Title</p></a>
-                <p href="/product/@pr.Id"></p><p>@pr.Description</p>
-                 <p class="product-old-price">@pr.Price</p>
-            </div>
-            
+            <div class="product-wrapper">
+                <a href="/product/@pr.Id">
+                    <img class="media-img" alt="@pr.Title" src="@pr.Url"/>
+                    <div class="product-info"> @pr.Title @pr.Price</div>
+                </a>
+            </div>           
         }
     }
     else
