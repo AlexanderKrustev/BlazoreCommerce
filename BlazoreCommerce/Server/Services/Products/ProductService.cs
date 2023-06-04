@@ -39,6 +39,28 @@ namespace BlazoreCommerce.Server.Services.Products
 
             return response;
         }
+
+        public async Task<ServiceResponse<Product>> GetProductById(int id)
+        {
+            var response = new ServiceResponse<Product>()
+            {
+                Data = await this._context.Products
+                         .Include(p => p.Variants)
+                         .ThenInclude(v => v.ProductType)
+                         .FirstOrDefaultAsync(c => c.Id == id)
+            };
+
+            if(response != null && response.Data != null)
+            {
+                return response;
+            }
+            else
+            {
+                response.Success = false;
+            }
+
+            return response;
+        }
     }
 }
 
