@@ -7,5 +7,7 @@
         Task<ServiceResponse<Product>> GetProductById(int id);
 
         Task<ServiceResponse<List<Product>>> GetProductsByCategory(string category);
+
+        Task<ServiceResponse<List<Product>>> SearchByWord(string searchtext);
     }
 }

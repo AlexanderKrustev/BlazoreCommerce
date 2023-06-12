@@ -1,4 +1,5 @@
 ﻿using BlazoreCommerce.Server.Database;
+using BlazoreCommerce.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazoreCommerce.Server.Services.Products
@@ -58,6 +59,23 @@ namespace BlazoreCommerce.Server.Services.Products
             {
                 response.Success = false;
             }
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<Product>>> SearchByWord(string searchtext)
+        {
+            var response = new ServiceResponse<List<Product>>()
+            {
+               Data = await this._context.Products.
+               Where
+               (
+                   c => c.Title.ToLower().Contains(searchtext.ToLower()) 
+                   ||
+                   c.Description.ToLower().Contains(searchtext.ToLower())
+                       )
+               .ToListAsync()
+            };
 
             return response;
         }

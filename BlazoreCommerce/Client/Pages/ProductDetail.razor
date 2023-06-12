@@ -6,18 +6,19 @@
     <div class="product-detail-wrapper">
         <img class="media-img" alt="@product.Title" src="@product.Url" />
         <div class="product-info">
+            <h4>@GetProductVariant().ProductType.Value</h4>
             <h3>@product.Title </h3>
             <h5>@product.Price</h5>
             <p>@product.Description</p>
 
-        
-			<div class="radio-inputs">
+
+            <div class="radio-inputs" >
                 @foreach(var variant in product.Variants)
                 {
-				<label>
-					<input class="radio-input" type="radio" name="engine">
+                    <label>
+                        <input class="radio-input" type="radio"  name="engine" @onchange="@(()=>{ currectTypeId=variant.ProductTypeId;})">
 					<span class="radio-tile">
-						<span class="radio-label">@variant.ProductType.Value</span>
+                            <span class="radio-label">@variant.ProductType.Value</span>
 					</span>
 				</label>	
                 }
@@ -32,6 +33,7 @@ else
 }
 @code {
     private Product? product = null;
+    private int currectTypeId = 1;
 
     [Parameter]
     public int Id { get; set; }
@@ -39,7 +41,17 @@ else
     protected override async Task OnParametersSetAsync()
     {
         product = await productService.GetProductById(Id);
-       
+
+        if (product.Variants.Count > 0)
+        {
+            currectTypeId = product.Variants[0].ProductTypeId;
+        }
+    }
+
+    private ProductVariant GetProductVariant()
+    {
+        return product.Variants.FirstOrDefault(c => c.ProductTypeId == currectTypeId);
 
     }
+
 }
