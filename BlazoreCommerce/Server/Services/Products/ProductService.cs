@@ -1,5 +1,4 @@
 ﻿using BlazoreCommerce.Server.Database;
-using BlazoreCommerce.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazoreCommerce.Server.Services.Products
@@ -75,6 +74,37 @@ namespace BlazoreCommerce.Server.Services.Products
                    c.Description.ToLower().Contains(searchtext.ToLower())
                        )
                .ToListAsync()
+            };
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<string>>> SearchSuggestions(string searchtext)
+        {
+            HashSet<string> allWords = new HashSet<string>();
+
+
+            var products = await this._context.Products
+             .ToListAsync();
+
+            foreach (var product in products)
+            {
+                foreach (var word in product.Title.Split(new[] { ' ', ',', '.', ':', '\t' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+
+                    allWords.Add(word.Trim());
+                }
+
+                foreach (var word in product.Description.Split(new[] { ' ', ',', '.', ':', '\t' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+
+                    allWords.Add(word.Trim());
+                }
+            }
+
+            var response = new ServiceResponse<List<string>>()
+            {
+                Data = allWords.Where(word => word.ToLower().Contains(searchtext.ToLower())).ToList()
             };
 
             return response;

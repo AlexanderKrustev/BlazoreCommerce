@@ -40,6 +40,15 @@ namespace BlazoreCommerce.Server.Controllers
         }
 
         [HttpGet]
+        [Route("suggestion/{searchtext}")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetSuggestionWordsBySearch(string searchtext)
+        {
+
+            var result = await _productService.SearchSuggestions(searchtext);
+            return Ok(result);
+        }
+
+        [HttpGet]
         [Route("cat/{category}")]
         public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProducts(string category)
         {
